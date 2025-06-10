@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 
 const userRouter = require("./routes/userProfiles");
+const questionRouter = require("./routes/questions");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -27,7 +28,8 @@ mongoose
 // Health‑check route
 app.get("/api/health", (_, res) => res.json({ status: "OK" }));
 
-// UserProfile-routes
+// Routes
 app.use("/api/users", userRouter);
+app.use("/api/questions", questionRouter);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
