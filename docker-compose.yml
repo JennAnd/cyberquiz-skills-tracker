@@ -1,0 +1,29 @@
+# docker-compose.yml
+version: "3.9"
+
+services:
+  mongo:
+    image: mongo:6
+    container_name: cyberquiz-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  api:
+    build: .
+    container_name: cyberquiz-api
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      # Override so the API talks to the internal Mongo service
+      - MONGO_URI=mongodb://mongo:27017/cyberquiz
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+
+volumes:
+  mongo_data:
