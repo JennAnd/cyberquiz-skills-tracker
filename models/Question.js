@@ -9,14 +9,15 @@ const QuestionSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+
+    // Array of answer options.
     options: [
       {
         optionText: { type: String, required: true },
-        // future‑proof: mark if this option is correct for multi‑select questions
         isCorrect: { type: Boolean, default: false },
       },
     ],
-    // for simple MCQs, keep a single correctAnswer ref by index
+    // For standard single‑choice questions we store the index of the correct option
     correctAnswerIndex: {
       type: Number,
       required: true,
@@ -40,7 +41,7 @@ const QuestionSchema = new mongoose.Schema(
       default: "beginner",
     },
   },
-  { timestamps: true }
+  { timestamps: true } // adds createdAt & updatedAt fields
 );
 
 module.exports = mongoose.model("Question", QuestionSchema);
